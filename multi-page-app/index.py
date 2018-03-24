@@ -1,6 +1,8 @@
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table_experiments as dt
+import visdcc
 import plotly.graph_objs as go
 import pandas as pd 
 
@@ -38,21 +40,41 @@ index_page = html.Div([
     ], style = {'width': '100%','display':'table'}),
 
     html.Div([
-        html.H5('2007 GDP Histogram', style={'textAlign': 'center'}),
-        dcc.Graph(id='gGDPHist', figure=go.Figure(data=[hist_trace])),
-        html.Div(id = 'gdpHistDiv')
-        #dcc.Link('Women earning detail', href='/apps/app2')
-    ]),
-
-
-    html.Div([
         html.Div([
             #html.H5('Gap distribution'),
             #dcc.Graph(id='gGap', figure=go.Histogram(data=[advisor_trace]))
         ], id = 'showinfo', className="six columns"),
 
-    ], className="row")
+    ], className="row"),
 
+    html.Div([
+        html.Div([
+            html.P('GDP distribution historgram information. The distribution is very long tailed. US and China are two largest economic entities.', 
+                style={'textAlign': 'center'})
+        ], style = {'width': '30%','display':'table-cell', 'verticalAlign': 'middle'}),
+        html.Div([
+            html.H5('2007 GDP Histogram', style={'textAlign': 'center'}),
+            dcc.Graph(id='gGDPHist', figure=go.Figure(data=[hist_trace])),
+            html.Div(id = 'gdpHistDiv')
+            #dcc.Link('Women earning detail', href='/apps/app2')
+        ], style = {'width': '70%','display':'table-cell'}),
+    ], style = {'width': '100%','display':'table'}),
+    
+    html.Div([
+        html.H5('2007 GPD Table', style={'textAlign': 'center'}),
+        dt.DataTable(
+                rows=dfgdp2007.to_dict('records'),
+
+                # optional - sets the order of columns
+                columns=sorted(dfgdp2007.columns),
+
+                row_selectable=True,
+                filterable=True,
+                sortable=True,
+                selected_row_indices=[],
+                id='datatable-gapminder'
+            ),
+    ], className="container")
 ])
 
 app.layout = html.Div([
@@ -61,7 +83,9 @@ app.layout = html.Div([
 
     # Each "page" will modify this element
     html.Div(id='page-content'),
-    
+
+    html.Div(dt.DataTable(rows=[{}]), style={'display': 'none'}),
+
 ], className="container")
 
 @app.callback(Output('page-content', 'children'),

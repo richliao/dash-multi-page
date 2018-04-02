@@ -91,8 +91,10 @@ app.layout = html.Div([
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    if pathname == '/apps/app1':
-         return app1.layout
+    if pathname.startswith('/apps/app1'):
+        country = pathname.split('/')[-1]
+        dfCountry = df_gdp[df_gdp.country==country]
+        return app1.return_Layout(dfCountry, country)
     elif pathname == '/apps/app2':
          return app2.layout
     else:
@@ -105,7 +107,7 @@ def display_info(clickData):
         for point in clickData['points']:
             print point['pointNumber']
             print point['label']
-        return html.P(point['label'])
+        return dcc.Link('Detail time series data of '+ point['label'], href='/apps/app1/'+point['label'])
 
 if __name__ == '__main__':
     app.run_server(debug=True)

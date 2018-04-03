@@ -1,6 +1,7 @@
 Ehanced version of multi-pages app demo
 
 1. Pass information as pathname to different url route     
+```python
 @app.callback(Output('page-content', 'children'),     
               [Input('url', 'pathname')])      
 def display_page(pathname):    
@@ -12,6 +13,7 @@ def display_page(pathname):
          return app2.layout
     else:
         return index_page
+```
         
 2. Dynamic generate url route based on user selection of the pie chart
 @app.callback(Output('showinfo', 'children'),

@@ -1,2 +1,3 @@
-# awesome-dash
-multi-pages dash app 
+Ehanced version of multi-pages app demo
+
+![demo](./image/demo.gif)

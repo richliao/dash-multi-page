@@ -16,6 +16,7 @@ def display_page(pathname):
 ```
         
 2. Dynamic generate url route based on user selection of the pie chart
+```python
 @app.callback(Output('showinfo', 'children'),
               [Input('gGDPPie', 'clickData')])
 def display_info(clickData):
@@ -24,5 +25,6 @@ def display_info(clickData):
             print point['pointNumber']
             print point['label']
         return dcc.Link('Detail time series data of '+ point['label'], href='/apps/app1/'+point['label'])
+```
 
 ![demo](./image/demo.gif)

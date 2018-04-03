@@ -1,11 +1,11 @@
 Ehanced version of multi-pages app demo
 
-1. Pass information as pathname to different url route 
-@app.callback(Output('page-content', 'children'),
-              [Input('url', 'pathname')])
-def display_page(pathname):
-    if pathname.startswith('/apps/app1'):
-        country = pathname.split('/')[-1]
+1. Pass information as pathname to different url route     
+@app.callback(Output('page-content', 'children'),     
+              [Input('url', 'pathname')])      
+def display_page(pathname):    
+    if pathname.startswith('/apps/app1'):   
+        country = pathname.split('/')[-1]   
         dfCountry = df_gdp[df_gdp.country==country]
         return app1.return_Layout(dfCountry, country)
     elif pathname == '/apps/app2':
